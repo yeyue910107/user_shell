@@ -1,0 +1,29 @@
+/*
+	token.h
+	词法分析程序
+*/
+void getToken()
+{
+	char inputWords[MAX_COMMAND_INPUT], filename[MAX_FILE_NAME_LENGTH];
+	int i, l, s = 0;
+	scanf ("%s", inputWords);
+	while (1)
+	{
+		l = strlen(inputWords);
+		for (i = 0; i < l; i++)
+			if (inputWords[i] == '<')
+				break;
+		if (i == l)
+			break;
+		i++;
+		while (inputWords[i] == ' ')
+			i++;
+		for(while
+	}
+}
+
+void PreToken(char iw[])
+{
+	
+}
+

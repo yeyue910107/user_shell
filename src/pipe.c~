@@ -1,0 +1,46 @@
+#include "pipe.h"
+
+//执行管道命令
+void executePipe(int pipeNum) {	
+	
+	//创建管道
+	if (pipe(pipe_fd) < 0) {
+		printf("Pipe failed.\n");
+		return ;
+	}
+	doPipe(0, pipeNum);
+}
+
+//递归执行管道的各进程
+void doPipe(int i, int pipeNum) {
+	int flag1, flag2, status;
+	
+	if (i < pipeNum) {
+		flag1 = i % 2;
+		flag2 = (i + 1) % 2;
+		if ((pid[i] = fork()) < 0) {
+			printf("Fork failed.\n");
+			exit(errno);
+		}
+		if (!pid[i]) {
+			close(pipe_fd[flag1]);
+			dup2(pipe_fd[flag2], flag2);
+			close(pipe_fd[flag2]);
+			execv(getCommonCmd(cmds[i].command), cmds[i].params);
+		}
+		if (pid[i]) {
+			doPipe(i + 1, pipeNum);
+			
+			close(pipe_fd[0]);
+			close(pipe_fd[1]);
+			waitpid(pid[i + 1], &status, 0);
+			//printf("Done waiting for more.\n");
+		}
+		//if (i < pipeNum - 1) {
+			/*close(pipe_fd[0]);
+			close(pipe_fd[1]);
+			waitpid(pid[i + 1], &status, 0);
+			printf("Done waiting for more.\n");*/
+		//}
+	}
+}

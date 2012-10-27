@@ -1,0 +1,8 @@
+#include	"config.h"
+#include	"error.h"
+#include	"output.h"
+main()
+{
+	OutPut("Do you like it?\n");
+}
+

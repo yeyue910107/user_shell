@@ -1,0 +1,66 @@
+/*
+	config.h
+	常量的定义 和 全局变量的声明 和 函数的声明
+*/
+//包含系统头文件
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <signal.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <errno.h>
+#include <stddef.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <sys/ioctl.h>
+#include <sys/termios.h>
+
+//定义常量
+
+#define MAX_COMMAND_INPUT	250	//命令输入的最大长度
+#define MAX_COMMAND_LENGTH	20	//命令的最大长度
+#define MAX_PARAMS_LENGTH 20		//命令参数最大长度
+#define MAX_PARAMS_NUM	10		//命令参数最大数量
+#define MAX_FILE_NAME_LENGTH	32	//输入输出文件名最大长度
+#define MAX_ERROR_LENGTH	250	//错误信息最大长度
+#define HISTORY_NUM 20
+#define COMMLEN 100
+#define STLEN 10
+//定义结构体
+
+//简单命令
+typedef struct {
+	char	*command;			//命令字符串
+	char	*params[MAX_PARAMS_NUM];	//命令参数
+	char	*inFile, *outFile;		//输入和输出重定向文件
+	int	isBg;				//是否在后台运行
+	int	numOfParams;			//参数数量
+}CMD;
+
+//历史命令记录
+typedef struct {
+	int begin, end;				//历史记录首末位置
+	char *cmds[HISTORY_NUM];		//历史记录
+}HISTORY; 
+
+//作业
+typedef struct Job {
+	int pid;				//作业进程号
+	char *command, *state;			//作业命令和状态
+	struct Job *next;			//下个作业节点
+}JOB;
+
+//全局变量
+char inputWords[MAX_COMMAND_INPUT];		//行输入
+
+//定义部分函数
+void executeCmd();
+void removeJob(int signal,siginfo_t*sip);
+void ctrlZ();
+void ctrlC();
+void modCont();
+
+

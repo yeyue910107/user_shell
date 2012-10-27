@@ -1,0 +1,20 @@
+/*
+	error.h
+	错误处理
+*/
+void ErrorMessage(int ErrorCode)
+{
+	char ReturnMessage[MAX_ERROR_LENGTH];
+	int length;
+	switch(ErrorCode)
+	{
+		case 1: strcpy(ReturnMessage,"Unknown Command!\nPlease check your command!");	//定义错误信息，可继续添加
+		default : strcpy(ReturnMessage,"Unknown Error!");
+	}
+	//添加末尾换行
+	length=strlen(ReturnMessage);
+	ReturnMessage
+	//提交输出
+	OutPut(ReturnMessage);	//输出信息
+}
+

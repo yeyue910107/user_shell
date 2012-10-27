@@ -1,0 +1,19 @@
+/*
+	output.h
+	输出控制文件
+*/
+void OutPut(char OutPutMes[])
+{
+	FILE *fp;
+	if(CurrentCommand.outFile[0])
+	{
+		fp=fopen(CurrentCommand->outFile,"w");
+		fprintf(fp,"%s",OutPutMes);
+		fclose(fp);
+	}
+	else
+	{
+		printf("%s",OutPutMes);
+	}
+}
+
